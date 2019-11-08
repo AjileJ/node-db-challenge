@@ -34,6 +34,5 @@ function getTasks(id){
 }
 function addTask(id, task) {
   return db('tasks')
-  .where({project_id: id})
-  .insert(task);
+  .insert({...task, project_id: id});
 }

@@ -25,10 +25,11 @@ router.get('/:id', (req,res) => {
 })
 
 router.post('/', (req,res) => {
+  project = req.body
   if(!req.body.project_name){
     return res.status(404).json({error: "needs a project name "})
   }
-  Pdb.add(projects)
+  Pdb.add(project)
   .then(projects => {
     res.status(201).json(projects)
   })
@@ -55,14 +56,6 @@ router.get('/:id/tasks', (req,res) => {
 router.post('/:id/tasks', (req,res) => {
   const {id} = req.params;
   const task = req.body;
-  Pdb.getById(id)
-  .then(project => {
-    if(!project[0]){
-      return res.status(404).json({error: "invalid id"})
-    }
-    if(!tasks.task_description) {
-      return res.status(404).json({error: "needs a task description"})
-    }
     Pdb.addTask(id, task)
     .then(task => {
       res.status(201).json(task)
@@ -71,7 +64,7 @@ router.post('/:id/tasks', (req,res) => {
       res.status(500).json({error: "error putting task into the database"})
     })
   })
-})
+
 
 
 module.exports = router;
