@@ -65,6 +65,18 @@ router.post('/:id/tasks', (req,res) => {
     })
   })
 
+  router.get('/:id/tasks', (req,res) => {
+    const {id} = req.params;
+    const task = req.body;
+    Pdb.insert({project_id: id,...task})
+    .then(task => {
+      res.status(200).json(task)
+    })
+    .catch(err => {
+      res.status(500).json({error: "cant get tasks"})
+    })
+  })
+
 
 
 module.exports = router;
